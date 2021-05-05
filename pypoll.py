@@ -28,27 +28,43 @@ with open(file_to_load,'r') as election_data:
     # read and print header row
     headers = next(file_reader)
     print(headers)
+    # loop through the rows in the file_reader to collect data
     for row in file_reader:
         total_votes += 1
         candidate = row[2]
+        # check if the candidate name is in the candidate name list.  If no then add it
+        # increase the number of votes in the candidate_votes dictionary by 1 by using the candidate name as the key
         if candidate not in candidate_name:
             candidate_name.append(candidate)
             candidate_votes[candidate] = 0
         candidate_votes[candidate] += 1
-print(candidate_votes)
-print(f"The total number of votes cast is {total_votes}")
-for candidate in candidate_votes:
-    print(f"{candidate} received {(float(candidate_votes[candidate])/float(total_votes)*100.0):,.1f}% of {total_votes} votes cast\n")
-    if candidate_votes[candidate] > winning_count:
-        winning_candidate = candidate
-        winning_count = candidate_votes[candidate]
-        winning_percentage = float(candidate_votes[candidate])/total_votes*100
-winning_candidate_summary = (
-    f"-----------------------\n"
-    f"Winner:  {winning_candidate}\n"
-    f"Winning vote count:  {winning_count:,}\n"
-    f"Winning percentage:  {winning_percentage:.1f}%\n"
-    f"------------------------\n")
-print(winning_candidate_summary)
+#print(candidate_votes)
+#print(f"The total number of votes cast is {total_votes}")
+# loop through the candidate_votes dictionary to print out the election returns, determine the winner, and print the winner
+
+with open(file_to_save,'w') as election_output:
+    election_results = (
+        f"\nElection Results\n"
+        f"-------------------------\n"
+        f"Total Votes:  {total_votes:,}\n"
+        f"-------------------------\n")
+    print(election_results, end="")
+    election_output.write(election_results)
+    for candidate in candidate_votes:
+        election_output.write(f"{candidate}: {(float(candidate_votes[candidate])/float(total_votes)*100.0):,.1f}% ({candidate_votes[candidate]:,})\n")
+        if candidate_votes[candidate] > winning_count:
+            winning_candidate = candidate
+            winning_count = candidate_votes[candidate]
+            winning_percentage = float(candidate_votes[candidate])/total_votes*100
+    election_output.write(f"-------------------------\n")
+    winning_candidate_summary = (
+        f"-----------------------\n"
+        f"Winner:  {winning_candidate}\n"
+        f"Winning vote count:  {winning_count:,}\n"
+        f"Winning percentage:  {winning_percentage:.1f}%\n"
+        f"------------------------\n")
+    election_output.write(winning_candidate_summary)
+
+
 
 # perform the analysis
