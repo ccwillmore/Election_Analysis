@@ -17,15 +17,15 @@ candidate_votes = {}
 winning_candidate = ""
 winning_count = 0
 winning_percentage = 0
-#assign a name to the path to the source data
+#assign a variable to the CSV file to open
 file_to_load = os.path.join('Resources','election_results.csv')
-# assign a name to the path to the file to write the analysis
+# assign a variable to the output CVS file for writing
 file_to_save = os.path.join('analysis','election_analysis.txt')
 # open the source data to read
 with open(file_to_load,'r') as election_data:
     # read the file
     file_reader = csv.reader(election_data)
-    # read and print header row
+    # read and print header row  next() moves the pointer to the second row
     headers = next(file_reader)
     print(headers)
     # loop through the rows in the file_reader to collect data
@@ -42,6 +42,7 @@ with open(file_to_load,'r') as election_data:
 #print(f"The total number of votes cast is {total_votes}")
 # loop through the candidate_votes dictionary to print out the election returns, determine the winner, and print the winner
 
+# open the output file as write only
 with open(file_to_save,'w') as election_output:
     election_results = (
         f"\nElection Results\n"
@@ -50,12 +51,18 @@ with open(file_to_save,'w') as election_output:
         f"-------------------------\n")
     print(election_results, end="")
     election_output.write(election_results)
+    # Print the formatted total votes and header to the terminal and write to the output file
+
+    # Loop through the candidate votes directory and, for each candidate, write the results to the file
     for candidate in candidate_votes:
         election_output.write(f"{candidate}: {(float(candidate_votes[candidate])/float(total_votes)*100.0):,.1f}% ({candidate_votes[candidate]:,})\n")
+        # Loop to determine the winner. 
         if candidate_votes[candidate] > winning_count:
             winning_candidate = candidate
             winning_count = candidate_votes[candidate]
             winning_percentage = float(candidate_votes[candidate])/total_votes*100
+    
+    # Write the winning candidate summary to the file
     election_output.write(f"-------------------------\n")
     winning_candidate_summary = (
         f"-----------------------\n"
@@ -65,6 +72,6 @@ with open(file_to_save,'w') as election_output:
         f"------------------------\n")
     election_output.write(winning_candidate_summary)
 
+# output file closes at the end of the with block
 
 
-# perform the analysis
