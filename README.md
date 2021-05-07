@@ -1,32 +1,71 @@
 # Election_Analysis  
 
-### Project summary  
+### Overview of election audit  
     
-The assignment is to use Python to automate the analysis and reporting of results for a subset of Colorado election resulst from Arapahoe, Denver, and Jefferson Counties.  
+The election commission requested an audit of the voting results from three Colorado counties:  Arapahoe, Denver, and Jefferson.  The commission want a receive a text file containing:  
+  
+1. Tabulation of votes cast in each of the counties.  
+2. Determination of the county with the greatest voter turnout.  
+3. Tabulation of votes for each candidate.  
+4. Determination of the winning candidate.  
+  
+The analysis must be automated by a python script.  The script must both print the results to the terminal and write the results to a text file.  
   
 The required deliverables are:  
   
-1. A python script that reads the .csv file containing the election results, tabulates the results for each candidate, determines the winner, and writes the results to a .csv file.
+1. A python script that reads the .csv file containing the election results, tabulates the election results, prints the results to the terminal, and writes the results to a .csv file.
   
 2. A .csv file, formatted as requested, containing the tabulated results of the election.  
   
 ### Data summary  
   
-The data a stored in a .csv file with 3 columns (voter id, County, and Candidate selected) and 369,711 rows of data (each row is a vote).  
+The data are stored in a .csv file with 3 columns (voter id, County, and Candidate selected) and 369,711 rows of data (each row is a vote).  
 [raw data file](Resources/election_results.csv)  
   
 A pivot table of the raw data (from Excel) can be used to QC the python analysis.  
 
 ![](Election_results_pivot_table.PNG)  
-
-### Methods  
-
-1. The data file is opened using a with open as statement.  
-2. The data file is read by the csv_reader() function as a list of lists.  
-3. A for loop steps through each row in the list of lists.  
-4. Total votes are accumulated and a list is populated with the candidate names using an if not in statement.  
-5. The candidate names and accumulated votes per candidate are stored in a dictionary.  
-6. The winning candidate is determined.  
-7. The output file is opened with a with open as statement and the output is written to the file.  
   
-![shot of results file](election_results_file_screenshot.PNG)  
+### Election audit results  
+  
+- Total number of votes recorded: 369,711  
+  
+- County Votes:  
+- Jefferson County:  10.5% (38,855)  
+- Denver County:  82.8% (306,055)  
+- Arapahoe County:  6.7% (24,801)  
+  
+- Largest county turnout:  Denver  
+  
+- Candidate votes:  
+- Charles Casper Stockham: 23.0% (85,213)  
+- Diana DeGette: 73.8% (272,892)  
+- Raymon Anthony Doane: 3.1% (11,606)  
+  
+- Winner: Diana DeGette  
+- Winning Vote Count: 272,892  
+- Winning Percentage: 73.8%  
+  
+### Election audit summary  
+  
+The python script created to audit the election results for Arapahoe, Denver, and Jefferson counties accurately and quickly generates a report that summarizes the votes and winners.  
+  
+The script both prints the results to the terminal:  
+![terminal screenshot](election_results_terminal_screenshot.PNG)  
+  
+and writes the results to a .csv file.    
+![election results cvs screenshot](election_results_file_screenshot.PNG)  
+  
+However, the script is limited in application.  In particular, the script curretnly:  
+- cannot not report out a tied election.  
+- requires that the cvs format be exactly the same as the file used in this audit.  
+- Cannot handle a csv file that contains elections for multiple positions in the same file.  
+  
+The script can be modified to provide quick and reliable election results for any election.  
+  
+To be applicable to all future elections the code should be modified to be more generalized.  It needs the following revisions:
+
+1. Determine which data are in which column using if ifel else statements rather than hard coding which data are in which column.  
+2. Add logic and output that tests for a tied election and writes the data for a tied election to the terminal and a text file.  
+3. If there is a column that identifies the position (in the case of multiple election results being reported in a singel csv file) then include logic that determines the election that a vote belongs to before collecting data per candidate and per county.  
+  
