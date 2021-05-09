@@ -2,7 +2,7 @@
 
 ### Overview of election audit  
     
-The election commission requested an audit of the voting results from three Colorado counties:  Arapahoe, Denver, and Jefferson.  The commission want a receive a text file containing:  
+The election commission requested an audit of the voting results from three Colorado counties:  Arapahoe, Denver, and Jefferson.  The commission want to receive a text file containing:  
   
 1. Tabulation of votes cast in each of the counties.  
 2. Determination of the county with the greatest voter turnout.  
@@ -65,7 +65,9 @@ The script can be modified to provide quick and reliable election results for an
   
 To be applicable to all future elections the code should be modified to be more generalized.  It needs the following revisions:
 
-1. Determine which data are in which column using if ifel else statements rather than hard coding which data are in which column.  
-2. Add logic and output that tests for a tied election and writes the data for a tied election to the terminal and a text file.  
+1. Allow the user to determine which data are in which column.  The program will display the header and prompt the the user to enter the column number of the required data. The entered column identifications will be used in the subsequent analysis.  
+2. Add logic that tests for a tied election and writes the data for a tied election to the terminal and a text file.  
 3. If there is a column that identifies the position (in the case of multiple election results being reported in a singel csv file) then include logic that determines the election that a vote belongs to before collecting data per candidate and per county.  
   
+
+If there is interest in having an automated procedure that can handle all future results then please let me know and I will deliver the general alogrithm described above.  
